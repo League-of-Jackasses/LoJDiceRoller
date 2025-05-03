@@ -1,0 +1,14 @@
+diff --git a/node_modules/@solid-primitives/trigger/package.json b/node_modules/@solid-primitives/trigger/package.json
+index bfb11f0..a01440d 100644
+--- a/node_modules/@solid-primitives/trigger/package.json
++++ b/node_modules/@solid-primitives/trigger/package.json
+@@ -32,6 +32,9 @@
+   "types": "./dist/index.d.ts",
+   "browser": {},
+   "exports": {
++    "@solid-primitives/source": "./src/index.ts",
++    "types": "./dist/index.d.ts",
++    "default": "./dist/index.js",
+     "import": {
+       "@solid-primitives/source": "./src/index.ts",
+       "types": "./dist/index.d.ts",

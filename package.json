@@ -1,0 +1,30 @@
+{
+  "name": "lojdiceroller",
+  "version": "1.0.0",
+  "description": "A Revolt bot centered around TTRPG functionality (e.g. rolling dies via formula).",
+  "homepage": "https://github.com/League-of-Jackasses/LoJDiceRoller#readme",
+  "bugs": {
+    "url": "https://github.com/League-of-Jackasses/LoJDiceRoller/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/League-of-Jackasses/LoJDiceRoller.git"
+  },
+  "license": "MIT",
+  "author": "League of Jackasses",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "patch-package",
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "patch-package": "^8.0.0",
+    "revolt.js": "^7.0.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
