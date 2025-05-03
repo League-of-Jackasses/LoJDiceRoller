@@ -30,11 +30,21 @@ client.on("messageCreate", (msg) => {
 // Help command
 client.on("messageCreate", async (msg) => {
     if(msg.content.toLowerCase() === `${PREFIX}help`) {
-        const helpMessage = `Hello, ${msg.author.username}! I'm a simple bot that can roll dice, I will be able to do more in the future, but for now, that's it. Here's how to use me:
+        const helpMessage = `Hello, ${msg.author.username}! I'm a dice rolling bot that supports complex formulas. Here's how to use me:
         
         Available commands:
-        - ping: Replies with "Pong!"
-        - roll (or r): Rolls dice. Use notation like "2d6". For example, to roll two six-sided dice, the full command you would use is "${PREFIX}roll 2d6". The command also supports arithmetic operations. For example, to roll two six-sided dice and add 3, the full command you would use is "${PREFIX}roll 2d6+3" (just make sure that there are no spaces between the die notation and the operator). You can also use the default die (${DEFAULT_DIE}) by just typing "${PREFIX}roll".`;
+        - ${PREFIX}ping: Replies with "Pong!"
+        - ${PREFIX}roll (or ${PREFIX}r): Rolls dice using notation like:
+          * Simple: "2d6" (two six-sided dice)
+          * With modifier: "2d6+3"
+          * Multiple dice: "2d6+1d4"
+          * Complex: "2d6+1d4+3-1d2"
+          
+        Examples:
+        - "${PREFIX}roll 2d6" - Roll two six-sided dice
+        - "${PREFIX}roll 1d20+5" - Roll d20 and add 5
+        - "${PREFIX}roll 2d6+1d4+2" - Roll multiple dice with modifiers
+        - "${PREFIX}roll" - Roll default die (${DEFAULT_DIE})`;
         msg.reply(helpMessage);
     }
 });
@@ -46,19 +56,31 @@ client.on("messageCreate", async (msg) => {
     if(args[0] === "roll" || args[0] === "r") {
         // Create a new DiceRoller instance and roll the dice
         const roller = new DiceRoller();
-        let result;
 
         if (args[1]) {
            try {
-            const {results, total} = roller.roll(args[1].toLocaleLowerCase());
-            msg.reply(`**Result**: ${args[1].toLocaleLowerCase()} (${results.join(", ")})\n**Total**: ${total}`);
+            const {components, total} = roller.roll(args[1].toLocaleLowerCase());
+            let reply = `**Rolling**: ${args[1].toLocaleLowerCase()}\n\n`;
+            
+            components.forEach((comp, i) => {
+                if (i > 0) reply += `${comp.operator} `;
+                if (comp.type === 'dice') {
+                    reply += `${comp.formula} (${comp.results.join(", ")}) `;
+                } else {
+                    reply += `${comp.value} `;
+                }
+            });
+            
+            reply += `\n**Total**: ${total}`;
+            msg.reply(reply);
            } catch (error) {
             msg.reply(error.message);
            }
         } else {
-            // If no arguments are provided, roll a single six-sided die by default
-            const {results, total} = roller.roll(DEFAULT_DIE);
-            msg.reply(`Hey, I noticed you didn't provide any arguments, so I'll roll a single ${DEFAULT_DIE} for you.\n\n**Result**: ${DEFAULT_DIE} (${results.join(", ")})\n**Total**: ${total}`);
+            // If no arguments are provided, roll the default die by default
+            const {components, total} = roller.roll(DEFAULT_DIE);
+            const comp = components[0];
+            msg.reply(`Hey, I noticed you didn't provide any arguments, so I'll roll a single ${DEFAULT_DIE} for you.\n\n**Result**: ${DEFAULT_DIE} (${comp.results.join(", ")})\n**Total**: ${total}`);
         }
     }
 });
