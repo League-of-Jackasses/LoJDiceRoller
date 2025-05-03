@@ -1,0 +1,4 @@
+# NPM stuff and build dir
+node_modules
+build
+npm-debug.log
