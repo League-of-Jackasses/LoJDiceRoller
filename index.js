@@ -34,7 +34,7 @@ client.on("messageCreate", async (msg) => {
         
         Available commands:
         - ping: Replies with "Pong!"
-        - roll (or r): Rolls dice. Use notation like "2d6". For example, to roll two six-sided dice, the full command you would use is  "${PREFIX}roll 2d6". The command also supports arithmetic operations. For example, to roll two six-sided dice and add 3, the full command you would use is "${PREFIX}roll 2d6+3" (just make sure that there are no spaces between the die notation and the operator). You can also use the default die (${DEFAULT_DIE}) by just typing "${PREFIX}roll".`;
+        - roll (or r): Rolls dice. Use notation like "2d6". For example, to roll two six-sided dice, the full command you would use is "${PREFIX}roll 2d6". The command also supports arithmetic operations. For example, to roll two six-sided dice and add 3, the full command you would use is "${PREFIX}roll 2d6+3" (just make sure that there are no spaces between the die notation and the operator). You can also use the default die (${DEFAULT_DIE}) by just typing "${PREFIX}roll".`;
         msg.reply(helpMessage);
     }
 });
